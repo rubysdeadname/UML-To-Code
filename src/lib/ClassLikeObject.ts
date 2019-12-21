@@ -4,6 +4,7 @@ import InterfaceObject from "./InterfaceObject";
 import ClassObject from "./ClassObject";
 
 export default class ClassLikeObject {
+  name: string;
   fields: [Field];
   methods: [Method];
 

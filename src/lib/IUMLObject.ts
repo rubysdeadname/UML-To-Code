@@ -1,3 +1,3 @@
 export default interface IUMLObject {
-  generateXML(): string;
+  generateText(): string;
 }
