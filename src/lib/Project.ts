@@ -1,5 +1,5 @@
-import IUMLObject from "./IUMLObject";
+import ClassLikeObject from "./ClassLikeObject";
 
 export default class Project {
-  objects: IUMLObject[] = [];
+  objects: ClassLikeObject[] = [];
 }

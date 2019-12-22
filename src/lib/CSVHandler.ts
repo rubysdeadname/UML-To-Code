@@ -1,8 +1,9 @@
 import Project from "./Project";
 import { readFileSync } from "fs";
-import ClassObject from "./ClassObject";
+import ClassLikeObject from "./ClassLikeObject";
 import Field from "./Field";
 import Method from "./Method";
+import { ObjectType } from "./ObjectType";
 
 export default class CSVHandler {
   createObjects(path: string): Project {
@@ -10,7 +11,7 @@ export default class CSVHandler {
     const project = new Project();
     const csvObject = this.convertCSVToObject(csv);
     csvObject.forEach(row => {
-      if (row.Name === "Class") project.objects.push(this.handleClassRow(row));
+      project.objects.push(this.convertRowToObject(row));
     });
     return project;
   }
@@ -47,9 +48,21 @@ export default class CSVHandler {
     return data;
   }
 
-  handleClassRow(row: string[]) {
-    const classObject = new ClassObject();
-    classObject.name = row["Text Area 1"];
+  convertRowToObject(row: string[]) {
+    const classObject = new ClassLikeObject();
+    const textAreaLines = row["Text Area 1"].split("~");
+
+    let fieldSectionNumber = "Text Area 2";
+    let methodSection = "Text Area 3";
+
+    if (textAreaLines[0] === `"<<interface>>`) {
+      classObject.name = textAreaLines[1].substring(0, textAreaLines[1].length - 1);
+      classObject.type = ObjectType.Interface;
+    } else {
+      classObject.name = textAreaLines[0];
+      classObject.type = ObjectType.Class;
+    }
+
     row["Text Area 2"]
       .substring(1, row["Text Area 2"].length - 1)
       .split("~")
@@ -65,6 +78,8 @@ export default class CSVHandler {
         const method = Method.parse(methodText);
         classObject.methods.push(method);
       });
+
+    if (classObject.type === "Interface") console.log(classObject);
     return classObject;
   }
 }
