@@ -1,8 +1,6 @@
 import Project from "./Project";
 import { readFileSync } from "fs";
 import ClassLikeObject from "./ClassLikeObject";
-import Field from "./Field";
-import Method from "./Method";
 import { ObjectType } from "./ObjectType";
 import ObjectDetail from "./ObjectDetail";
 import { ObjectDetailType } from "./ObjectDetailType";

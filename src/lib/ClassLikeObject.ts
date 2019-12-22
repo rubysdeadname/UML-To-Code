@@ -1,5 +1,3 @@
-import Field from "./Field";
-import Method from "./Method";
 import { ObjectType } from "./ObjectType";
 import ObjectDetail from "./ObjectDetail";
 

@@ -1,4 +1,4 @@
 export enum ObjectDetailType {
-  Field,
-  Method
+  Field = "Field",
+  Method = "Method"
 }
