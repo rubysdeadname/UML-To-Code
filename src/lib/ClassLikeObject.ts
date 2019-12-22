@@ -5,9 +5,9 @@ import ClassObject from "./ClassObject";
 
 export default class ClassLikeObject {
   name: string;
-  fields: [Field];
-  methods: [Method];
+  fields: Field[] = [];
+  methods: Method[] = [];
 
-  implements: [InterfaceObject];
+  implements: InterfaceObject[] = [];
   extendeds: ClassObject;
 }
