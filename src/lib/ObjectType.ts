@@ -1,4 +1,4 @@
 export enum ObjectType {
-  Class = "Class",
-  Interface = "Interface"
+  Class = "class",
+  Interface = "interface"
 }
