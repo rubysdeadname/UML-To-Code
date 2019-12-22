@@ -22,8 +22,7 @@ export default class ObjectDetail {
     objectDetail.type = openBracketIndex > 0 ? ObjectDetailType.Method : ObjectDetailType.Field;
     objectDetail.visibility = Visibility[objectDetailText[0]] || "";
     objectDetail.input = objectDetailText.substring(openBracketIndex + 1, closeBracketIndex).trim();
-    objectDetail.returnType =
-      colonIndex > 0 ? objectDetailText.substring(colonIndex + 1).trim() : "";
+    objectDetail.returnType = colonIndex > 0 ? objectDetailText.substr(colonIndex + 1).trim() : "";
     return objectDetail;
   }
 }
