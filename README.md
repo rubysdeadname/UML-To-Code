@@ -1,2 +1,3 @@
-# umlMakerV2
-A node app to create draw.io-compatible uml diagrams from projects
+# UML-To-Code
+
+A node app that can initialise classes and interfaces based on the CSV shape data from a lucidchart UML class diagram.
