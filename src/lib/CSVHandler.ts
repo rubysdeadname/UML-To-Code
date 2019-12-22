@@ -4,6 +4,8 @@ import ClassLikeObject from "./ClassLikeObject";
 import Field from "./Field";
 import Method from "./Method";
 import { ObjectType } from "./ObjectType";
+import ObjectDetail from "./ObjectDetail";
+import { ObjectDetailType } from "./ObjectDetailType";
 
 export default class CSVHandler {
   createObjects(path: string): Project {
@@ -52,9 +54,6 @@ export default class CSVHandler {
     const classObject = new ClassLikeObject();
     const textAreaLines = row["Text Area 1"].split("~");
 
-    let fieldSectionNumber = "Text Area 2";
-    let methodSection = "Text Area 3";
-
     if (textAreaLines[0] === `"<<interface>>`) {
       classObject.name = textAreaLines[1].substring(0, textAreaLines[1].length - 1);
       classObject.type = ObjectType.Interface;
@@ -63,23 +62,21 @@ export default class CSVHandler {
       classObject.type = ObjectType.Class;
     }
 
-    row["Text Area 2"]
-      .substring(1, row["Text Area 2"].length - 1)
-      .split("~")
-      .forEach(fieldText => {
-        const field = Field.parse(fieldText);
-        classObject.fields.push(field);
-      });
+    this.addObjectDetailsToObject(classObject, row["Text Area 2"]);
+    this.addObjectDetailsToObject(classObject, row["Text Area 3"]);
 
-    row["Text Area 3"]
-      .substring(1, row["Text Area 3"].length - 1)
-      .split("~")
-      .forEach(methodText => {
-        const method = Method.parse(methodText);
-        classObject.methods.push(method);
-      });
-
-    if (classObject.type === "Interface") console.log(classObject);
+    console.log(classObject);
     return classObject;
+  }
+
+  addObjectDetailsToObject(object: ClassLikeObject, textArea: string): void {
+    textArea
+      .substring(1, textArea.length - 1)
+      .split("~")
+      .forEach(detailText => {
+        const detail = ObjectDetail.parse(detailText);
+        if (detail.type === ObjectDetailType.Field) object.fields.push(detail);
+        else if (detail.type === ObjectDetailType.Method) object.methods.push(detail);
+      });
   }
 }

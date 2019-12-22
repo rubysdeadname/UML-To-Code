@@ -1,12 +1,13 @@
 import Field from "./Field";
 import Method from "./Method";
 import { ObjectType } from "./ObjectType";
+import ObjectDetail from "./ObjectDetail";
 
 export default class ClassLikeObject {
   name: string;
   type: ObjectType;
-  fields: Field[] = [];
-  methods: Method[] = [];
+  fields: ObjectDetail[] = [];
+  methods: ObjectDetail[] = [];
 
   implements: ClassLikeObject[] = [];
   extendeds: ClassLikeObject;
