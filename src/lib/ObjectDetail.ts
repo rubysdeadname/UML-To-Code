@@ -8,10 +8,6 @@ export default class ObjectDetail {
   visibility: Visibility;
   returnType: string;
 
-  stringify() {
-    console.log(`${this.visibility} ${this.name}: ${this.returnType}`);
-  }
-
   static parse(objectDetailText: string): ObjectDetail {
     const objectDetail = new ObjectDetail();
     const colonIndex = objectDetailText.indexOf(":");

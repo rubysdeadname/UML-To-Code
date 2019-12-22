@@ -94,6 +94,18 @@ export default class CSVHandler {
     const parent = objects.find(obj => obj.id === destinationId);
 
     if (parent.type === ObjectType.Class) child.extends = parent;
-    else if (parent.type === ObjectType.Interface) child.implements.push(parent);
+    else if (parent.type === ObjectType.Interface) {
+      CSVHandler.implementInterface(child, parent);
+      child.implements.push(parent);
+    }
+  }
+
+  private static implementInterface(child: ClassLikeObject, parent: ClassLikeObject) {
+    parent.fields.forEach(field => {
+      if (!child.fields.map(f => f.name).includes(field.name)) child.fields.push(field);
+    });
+    parent.methods.forEach(method => {
+      if (!child.methods.map(m => m.name).includes(method.name)) child.methods.push(method);
+    });
   }
 }

@@ -1,6 +1,6 @@
 import IClassConstructor from "./IClassConstructor";
 import ClassLikeObject from "./ClassLikeObject";
-import { appendFile, appendFileSync } from "fs";
+import { appendFileSync } from "fs";
 import { ObjectType } from "./ObjectType";
 
 export default class ApexConstructor implements IClassConstructor {
@@ -9,9 +9,6 @@ export default class ApexConstructor implements IClassConstructor {
     const classMetaText = this.createMetaText();
     appendFileSync(`${classLikeObject.name}.cls`, classText);
     appendFileSync(`${classLikeObject.name}.cls-meta.xml`, classMetaText);
-    // console.log(classText);
-    // console.log(classMetaText);
-    // console.log();
   }
 
   private createClassText(classLikeObject: ClassLikeObject): string {
