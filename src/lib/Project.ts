@@ -6,7 +6,8 @@ export default class Project {
   classConstructor: IClassConstructor;
 
   constructor(path: string, classConstructor: IClassConstructor) {
-    this.objects = CSVHandler.createObjects(path);
+    const csv = CSVHandler.getFileContents(path);
+    this.objects = CSVHandler.createObjects(csv);
     this.classConstructor = classConstructor;
   }
 

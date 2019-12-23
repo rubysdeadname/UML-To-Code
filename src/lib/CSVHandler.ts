@@ -5,8 +5,7 @@ import ObjectDetail from "./ObjectDetail";
 import { ObjectDetailType } from "./ObjectDetailType";
 
 export default class CSVHandler {
-  static createObjects(path: string): ClassLikeObject[] {
-    const csv = CSVHandler.getFileContents(path);
+  static createObjects(csv: string): ClassLikeObject[] {
     const objects: ClassLikeObject[] = [];
     const csvObject = CSVHandler.convertCSVToObject(csv);
     csvObject.forEach(row => {
@@ -16,7 +15,7 @@ export default class CSVHandler {
     return objects;
   }
 
-  private static getFileContents(path: string): string {
+  static getFileContents(path: string): string {
     return readFileSync(path).toString();
   }
 
@@ -24,6 +23,7 @@ export default class CSVHandler {
     const sections: string[] = [];
     let section = "";
     csv.split("\n").forEach(row => {
+      row = row.trim();
       if (!isNaN(Number(row[0]))) {
         sections.push(section);
         section = "";
@@ -60,7 +60,6 @@ export default class CSVHandler {
       classObject.name = textAreaLines[0].trim();
       classObject.type = ObjectType.Class;
     }
-
     CSVHandler.addObjectDetailsToObject(classObject, row["Text Area 2"]);
     CSVHandler.addObjectDetailsToObject(classObject, row["Text Area 3"]);
     return classObject;
