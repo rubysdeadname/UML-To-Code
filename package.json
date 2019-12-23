@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "A node app that can initialise classes and interfaces based on the CSV shape data from a lucidchart UML class diagram.",
   "main": "main.js",
-  "dependencies": {
-    "chai": "^4.2.0",
-    "ts-node": "^8.5.4"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "ts-node": "^8.5.4"
   },
   "scripts": {
     "test": "mocha"
