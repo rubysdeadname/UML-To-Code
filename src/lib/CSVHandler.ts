@@ -5,8 +5,7 @@ import ObjectDetail from "./ObjectDetail";
 import { ObjectDetailType } from "./ObjectDetailType";
 
 export default class CSVHandler {
-  static createObjects(path: string): ClassLikeObject[] {
-    const csv = CSVHandler.getFileContents(path);
+  static createObjects(csv: string): ClassLikeObject[] {
     const objects: ClassLikeObject[] = [];
     const csvObject = CSVHandler.convertCSVToObject(csv);
     csvObject.forEach(row => {
@@ -16,7 +15,7 @@ export default class CSVHandler {
     return objects;
   }
 
-  private static getFileContents(path: string): string {
+  static getFileContents(path: string): string {
     return readFileSync(path).toString();
   }
 
@@ -24,6 +23,7 @@ export default class CSVHandler {
     const sections: string[] = [];
     let section = "";
     csv.split("\n").forEach(row => {
+      row = row.trim();
       if (!isNaN(Number(row[0]))) {
         sections.push(section);
         section = "";
@@ -51,24 +51,22 @@ export default class CSVHandler {
 
   private static convertRowToObject(row: string[]) {
     const classObject = new ClassLikeObject();
-    const textAreaLines = row["Text Area 1"].split("~");
+    const textAreaLines = CSVHandler.unwrapQuotes(row["Text Area 1"]).split("~");
     classObject.id = row["Id"];
-    if (textAreaLines[0] === `"<<interface>>`) {
-      classObject.name = textAreaLines[1].substring(0, textAreaLines[1].length - 1).trim();
+    if (textAreaLines[0] === `<<interface>>`) {
+      classObject.name = textAreaLines[1].trim();
       classObject.type = ObjectType.Interface;
     } else {
       classObject.name = textAreaLines[0].trim();
       classObject.type = ObjectType.Class;
     }
-
     CSVHandler.addObjectDetailsToObject(classObject, row["Text Area 2"]);
     CSVHandler.addObjectDetailsToObject(classObject, row["Text Area 3"]);
     return classObject;
   }
 
   private static addObjectDetailsToObject(object: ClassLikeObject, textArea: string): void {
-    textArea
-      .substring(1, textArea.length - 1)
+    CSVHandler.unwrapQuotes(textArea)
       .split("~")
       .forEach(detailText => {
         const detail = ObjectDetail.parse(detailText);
@@ -76,6 +74,13 @@ export default class CSVHandler {
         if (detail.type === ObjectDetailType.Field) object.fields.push(detail);
         else if (detail.type === ObjectDetailType.Method) object.methods.push(detail);
       });
+  }
+
+  private static unwrapQuotes(text: string): string {
+    let unwrapped = text;
+    if (text[0] === '"') unwrapped = unwrapped.substr(1);
+    if (text[text.length - 1] === '"') unwrapped = unwrapped.substr(0, unwrapped.length - 1);
+    return unwrapped;
   }
 
   private static resolveLines(objects: ClassLikeObject[], row: string[]) {

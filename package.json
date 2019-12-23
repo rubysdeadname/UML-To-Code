@@ -1,0 +1,32 @@
+{
+  "name": "uml-to-code",
+  "version": "1.0.0",
+  "description": "A node app that can initialise classes and interfaces based on the CSV shape data from a lucidchart UML class diagram.",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.21",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register src/tests/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielbarker/UML-To-Code.git"
+  },
+  "keywords": [
+    "UML"
+  ],
+  "author": "gabrielbarker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielbarker/UML-To-Code/issues"
+  },
+  "homepage": "https://github.com/gabrielbarker/UML-To-Code#readme"
+}
