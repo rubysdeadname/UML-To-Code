@@ -53,7 +53,6 @@ describe("CSVHandler.createObjects()", () => {
     3,Line,,1,,,2,1,Generalization,None,,,`;
 
     let objects = CSVHandler.createObjects(csv);
-    console.log("pong");
     expect(objects[0].extends.name).to.equal("Parent");
   });
 
@@ -65,7 +64,6 @@ describe("CSVHandler.createObjects()", () => {
     3,Line,,1,,,2,1,Generalization,None,,,`;
 
     let objects = CSVHandler.createObjects(csv);
-    console.log("pong");
     expect(objects[0].implements[0].name).to.equal("Parent");
   });
 });
