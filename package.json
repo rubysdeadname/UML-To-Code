@@ -18,6 +18,9 @@
     "test": "mocha -r ts-node/register src/tests/*.ts",
     "prepublish": "tsc"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gabrielbarker/UML-To-Code.git"
