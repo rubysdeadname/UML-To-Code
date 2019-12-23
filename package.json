@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test1": "mocha",
-    "test": "mocha -r ts-node/register src/tests/sample.ts"
+    "test": "mocha -r ts-node/register src/tests/*.ts"
   },
   "repository": {
     "type": "git",
