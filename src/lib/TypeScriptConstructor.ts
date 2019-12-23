@@ -5,11 +5,11 @@ import { ObjectType } from "./ObjectType";
 
 export default class TypeScriptConstructor implements IClassConstructor {
   createClass(classLikeObject: ClassLikeObject): void {
-    const classText = this.createClassText(classLikeObject);
+    const classText = TypeScriptConstructor.createClassText(classLikeObject);
     appendFileSync(`${classLikeObject.name}.ts`, classText);
   }
 
-  private createClassText(classLikeObject: ClassLikeObject): string {
+  static createClassText(classLikeObject: ClassLikeObject): string {
     let classText = `export default ${classLikeObject.type} ${classLikeObject.name}`;
     if (classLikeObject.extends) classText += ` extends ${classLikeObject.extends.name}`;
     if (classLikeObject.implements.length) classText += ` implements `;
