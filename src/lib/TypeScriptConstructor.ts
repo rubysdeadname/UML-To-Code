@@ -3,44 +3,36 @@ import ClassLikeObject from "./ClassLikeObject";
 import { appendFileSync } from "fs";
 import { ObjectType } from "./ObjectType";
 
-export default class ApexConstructor implements IClassConstructor {
+export default class TypeScriptConstructor implements IClassConstructor {
   createClass(classLikeObject: ClassLikeObject): void {
     const classText = this.createClassText(classLikeObject);
-    const classMetaText = this.createMetaText();
-    appendFileSync(`${classLikeObject.name}.cls`, classText);
-    appendFileSync(`${classLikeObject.name}.cls-meta.xml`, classMetaText);
+    appendFileSync(`${classLikeObject.name}.ts`, classText);
   }
 
   private createClassText(classLikeObject: ClassLikeObject): string {
-    let classText = `public ${classLikeObject.type} ${classLikeObject.name}`;
+    let classText = `export default ${classLikeObject.type} ${classLikeObject.name}`;
     if (classLikeObject.extends) classText += ` extends ${classLikeObject.extends.name}`;
     if (classLikeObject.implements.length) classText += ` implements `;
     classText += classLikeObject.implements.map(i => i.name).join(", ");
     classText += ` {\n`;
-    classLikeObject.fields.forEach(
-      field =>
-        (classText += `  ${field.visibility} ${field.returnType || "Object"} ${field.name};\n`)
-    );
 
+    classLikeObject.fields.forEach(field => {
+      classText += `  `;
+      if (field.visibility === "private") classText += `${field.visibility} `;
+      classText += `${field.name}: ${field.returnType || "Object"};\n`;
+    });
     if (classLikeObject.fields.length) classText += `\n`;
 
     classLikeObject.methods.forEach(method => {
       classText += `  `;
-      if (classLikeObject.type === ObjectType.Class) classText += `${method.visibility} `;
-      classText += `${method.returnType || "void"} ${method.name}(${method.input})`;
+      if (classLikeObject.type === ObjectType.Class && method.visibility === "private")
+        classText += `${method.visibility} `;
+      classText += `${method.name}(${method.input}): ${method.returnType || "void"} `;
       if (classLikeObject.type === ObjectType.Class) classText += `{\n\n  }\n\n`;
       else if (classLikeObject.type === ObjectType.Interface) classText += `;\n`;
     });
+
     classText += `}`;
     return classText;
-  }
-
-  private createMetaText(): string {
-    const apiVersion = "46.0";
-    return `<?xml version="1.0" encoding="UTF-8"?>
-    <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-        <apiVersion>${apiVersion}</apiVersion>
-        <status>Active</status>
-    </ApexClass>`;
   }
 }
