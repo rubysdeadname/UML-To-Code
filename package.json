@@ -9,10 +9,12 @@
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
+    "typescript": "^3.7.4",
     "ts-node": "^8.5.4"
   },
   "scripts": {
-    "test": "mocha"
+    "test1": "mocha",
+    "test": "mocha -r ts-node/register src/tests/sample.ts"
   },
   "repository": {
     "type": "git",
