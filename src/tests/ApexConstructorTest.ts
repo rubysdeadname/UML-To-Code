@@ -50,4 +50,15 @@ describe("ApexConstructor.createClassText()", () => {
 }`;
     expect(ApexConstructor.createClassText(testClass)).to.equal(classText);
   });
+
+  it("should return meta file", () => {
+    const apiVersion = "46.0";
+    const metaText = ApexConstructor.createMetaText();
+    const expectedMeta = `<?xml version="1.0" encoding="UTF-8"?>
+    <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
+        <apiVersion>${apiVersion}</apiVersion>
+        <status>Active</status>
+    </ApexClass>`;
+    expect(metaText).to.equal(expectedMeta);
+  });
 });

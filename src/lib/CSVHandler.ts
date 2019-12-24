@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import ClassLikeObject from "./ClassLikeObject";
 import { ObjectType } from "./ObjectType";
 import ObjectDetail from "./ObjectDetail";
@@ -16,7 +16,7 @@ export default class CSVHandler {
   }
 
   static getFileContents(path: string): string {
-    return readFileSync(path).toString();
+    return existsSync(path) ? readFileSync(path).toString() : "";
   }
 
   private static seperateCSVIntoRows(csv: string): string[] {
