@@ -3,20 +3,18 @@ import ClassLikeObject from "./ClassLikeObject";
 import { appendFileSync } from "fs";
 import { ObjectType } from "./ObjectType";
 
-export default class ApexConstructor implements IClassConstructor {
+export default class JavaConstructor implements IClassConstructor {
   createClass(classLikeObject: ClassLikeObject): void {
-    const classText = ApexConstructor.createClassText(classLikeObject);
-    const classMetaText = ApexConstructor.createMetaText();
-    appendFileSync(`${classLikeObject.name}.cls`, classText);
-    appendFileSync(`${classLikeObject.name}.cls-meta.xml`, classMetaText);
+    const classText = JavaConstructor.createClassText(classLikeObject);
+    appendFileSync(`${classLikeObject.name}.java`, classText);
   }
 
   static createClassText(classLikeObject: ClassLikeObject): string {
-    let classText = ApexConstructor.addClassDeclaration(classLikeObject);
-    classText += ApexConstructor.addExtendsAndImplements(classLikeObject);
+    let classText = JavaConstructor.addClassDeclaration(classLikeObject);
+    classText += JavaConstructor.addExtendsAndImplements(classLikeObject);
     classText += ` {\n`;
-    classText += ApexConstructor.addFields(classLikeObject);
-    classText += ApexConstructor.addMethods(classLikeObject);
+    classText += JavaConstructor.addFields(classLikeObject);
+    classText += JavaConstructor.addMethods(classLikeObject);
     classText += `}`;
     return classText;
   }
@@ -53,14 +51,5 @@ export default class ApexConstructor implements IClassConstructor {
       else if (classLikeObject.type === ObjectType.Interface) classText += `;\n`;
     });
     return classText;
-  }
-
-  static createMetaText(): string {
-    const apiVersion = "46.0";
-    return `<?xml version="1.0" encoding="UTF-8"?>
-    <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-        <apiVersion>${apiVersion}</apiVersion>
-        <status>Active</status>
-    </ApexClass>`;
   }
 }
