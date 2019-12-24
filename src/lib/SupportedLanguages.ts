@@ -1,5 +1,6 @@
 import ApexConstructor from "./ApexConstructor";
 import TypeScriptConstructor from "./TypeScriptConstructor";
+import JavaConstructor from "./JavaConstructor";
 import IClassConstructor from "./IClassConstructor";
 
 export default class SupportedLanguages {
@@ -10,6 +11,8 @@ export default class SupportedLanguages {
       case "TS":
       case "TYPESCRIPT":
         return new TypeScriptConstructor();
+      case "JAVA":
+        return new JavaConstructor();
     }
   }
 }
